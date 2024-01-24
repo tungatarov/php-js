@@ -26,6 +26,15 @@ function flt_input($var) {
     return str_replace(['\\', "\0", "'", '"', "\x1a", "\x00"], ['\\\\', '\\0', "\\'", '\\"', '\\Z', '\\Z'], $var);
 }
 
+function recursive_filter_input($subject)
+{
+    if (is_array($subject)) {
+        return array_map('recursive_filter_input', $subject);
+    } else {
+        return flt_input($subject);
+    }
+}
+
 function generate_rand_str($length, $type = 'hexadecimal') {
     // vars
     $str = '';

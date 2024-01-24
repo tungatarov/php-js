@@ -113,10 +113,23 @@ let common = {
 
     // search
 
-    search_do: (act) => {
+    search_do: (act, form) => {
         // vars
         let data = { search: gv('search') };
         let location = { dpt: 'search', act: act };
+
+        if (form instanceof HTMLFormElement) {
+            let search = {}
+            for (let i = 0; i < form.elements.length; i++) {
+                let e = form.elements[i],
+                    value = e.value.trim()
+                if (value) {
+                    search[e.name] = value;
+                }
+            }
+            data = { search: search };
+        }
+
         // call
         request({location: location, data: data}, (result) => {
             html('table', result.html);
@@ -155,6 +168,67 @@ let common = {
         request({location: location, data: data}, (result) => {
             common.modal_hide();
             html('table', result.html);
+        });
+    },
+
+    // users
+
+    user_edit_window: (user_id, e) => {
+        // actions
+        cancel_event(e);
+        common.menu_popup_hide_all('all');
+        // vars
+        let data = { user_id: user_id };
+        let location = { dpt: 'user', act: 'edit_window' };
+        // call
+        request({ location: location, data: data }, (result) => {
+            common.modal_show(400, result.html);
+        });
+    },
+
+    user_edit_update: (user_id = 0) => {
+        // vars
+        let data = {
+            user_id: user_id,
+            first_name: gv('firstname'),
+            last_name: gv('lastname'),
+            phone: gv('phone'),
+            email: gv('email'),
+            plots: gv('plots'),
+            offset: global.offset
+        };
+        let location = {dpt: 'user', act: 'edit_update'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_hide();
+            html('table', result.html);
+        });
+    },
+
+    user_delete: (user_id = 0) => {
+        // vars
+        let data = {
+            user_id: user_id,
+            offset: global.offset
+        };
+        let location = {dpt: 'user', act: 'delete'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_hide();
+            html('table', result.html);
+        });
+    },
+
+    user_delete_window: (user_id, e) => {
+        // actions
+        cancel_event(e);
+        common.menu_popup_hide_all('all');
+        // vars
+        let data = { user_id: user_id };
+        let location = { dpt: 'user', act: 'delete_window' };
+        // call
+        request({ location: location, data: data }, (result) => {
+            common.modal_show(400, result.html);
         });
     },
 }

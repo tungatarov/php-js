@@ -1,0 +1,27 @@
+<div class="sub_header">
+    <div>
+        <div class="btn_sub" onclick="common.user_edit_window();">Add</div>
+    </div>
+    <div>
+        <div id="paginator">{$paginator}</div>
+
+    </div>
+</div>
+<form class="users_search" oninput="common.search_do('users', this);">
+    <div class="input_group">
+        <i class="icon_search"></i>
+        <input id="phone" type="text" value="{$search}" placeholder="phone" name="phone">
+    </div>
+    <div class="input_group">
+        <i class="icon_search"></i>
+        <input id="name" type="text" value="{$search}" placeholder="name" name="name">
+    </div>
+    <div class="input_group">
+        <i class="icon_search"></i>
+        <input id="email" type="text" value="{$search}" placeholder="email" name="email">
+    </div>
+</form>
+<div id="table">
+    {include file="./partials/users_table.html"}
+</div>
+

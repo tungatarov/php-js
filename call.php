@@ -15,7 +15,7 @@ DB::connect();
 // VARS
 
 $location = isset($_POST['location']) ? flt_input($_POST['location']) : NULL;
-$data = isset($_POST['data']) ? flt_input($_POST['data']) : NULL;
+$data = isset($_POST['data']) ? recursive_filter_input($_POST['data']) : NULL;
 
 $dpt = $location['dpt'] ?? NULL;
 $act = $location['act'] ?? NULL;
